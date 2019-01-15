@@ -15,14 +15,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(routes);
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var CONNECTION_URI = process.env.MONGODB_URI || "mongodb://localhost/users";
 
 
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, {
+mongoose.Promise = global.Promise;
+mongoose.connect(CONNECTION_URI, {
   useMongoClient: true
+})
+.then(()=>{
+console.log("Sup!")
 });
 
 app.listen(PORT, function() {
-  console.log("Listening on port: " + PORT);
+  console.log(`Listening on port: ${PORT}`);
 });
